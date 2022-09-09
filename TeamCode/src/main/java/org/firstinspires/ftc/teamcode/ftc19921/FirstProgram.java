@@ -1,4 +1,6 @@
 package org.firstinspires.ftc.teamcode.ftc19921;
-// Nathan Randall
+
+// Alan Smith & Nathan Randall
+
 public class FirstProgram {
 }
