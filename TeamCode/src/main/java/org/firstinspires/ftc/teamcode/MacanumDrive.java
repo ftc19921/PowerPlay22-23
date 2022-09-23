@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 @TeleOp(name = "MacanumDrive")
 public class MacanumDrive extends OpMode {
     DcMotor frontRightMotor;
@@ -35,26 +37,42 @@ public class MacanumDrive extends OpMode {
         /*double controllerY = -gamepad1.left_stick_y;
         double controllerX = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_y;*/
-        frontRightMotor.setPower(gamepad1.right_stick_y);
-        frontLeftMotor.setPower(-gamepad1.left_stick_y);
-        backRightMotor.setPower(-gamepad1.left_stick_y);
-        backLeftMotor.setPower(gamepad1.right_stick_y);
+        frontRightMotor.setPower(gamepad1.left_stick_y);
+        frontLeftMotor.setPower(-gamepad1.right_stick_y);
+        backRightMotor.setPower(-gamepad1.right_stick_y);
+        backLeftMotor.setPower(gamepad1.left_stick_y);
         double armMotorSpeed = 0;
 
         if(gamepad2.x) {
+
             gripperServo.setPosition(0.3);
+
         }
         if(gamepad2.y){
             gripperServo.setPosition(0);
 
         }
-        if (gamepad1.a) {
+        if (gamepad2.a) {
             armMotorSpeed = 1;
-            armMotor.setPower(armMotorSpeed / 2);
+            armMotor.setPower(armMotorSpeed / 3);
         }
-        if (gamepad1.b) {
+        if (gamepad2.b) {
             armMotorSpeed = -1;
-            armMotor.setPower(armMotorSpeed / 2);
+            armMotor.setPower(armMotorSpeed / 3);
+        }
+        if(gamepad1.left_bumper){
+            frontLeftMotor.setPower(1);
+            backRightMotor.setPower(-1);
+            frontRightMotor.setPower(1);
+            backLeftMotor.setPower(-1);
+
+        }
+        if(gamepad1.right_bumper){
+            frontRightMotor.setPower(-1);
+            backLeftMotor.setPower(1);
+            frontLeftMotor.setPower(-1);
+            backRightMotor.setPower(1);
+
         }
         armMotor.setPower(armMotorSpeed);
     }
