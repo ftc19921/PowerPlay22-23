@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.ams.AMSColorSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 @Autonomous
 public class MacanumAuto extends OpMode {
@@ -10,6 +11,7 @@ public class MacanumAuto extends OpMode {
     DcMotor Rightbackmotor;
     DcMotor Leftfrontmotor;
     DcMotor Leftbackmotor;
+    ColorSensor colorSensor;
     public void init() {
 
 
@@ -17,6 +19,7 @@ public class MacanumAuto extends OpMode {
         Rightbackmotor=hardwareMap.get(DcMotor.class,"motorBackRight");
         Leftfrontmotor=hardwareMap.get(DcMotor.class,"motorFrontLeft");
         Leftbackmotor=hardwareMap.get(DcMotor.class,"motorBackLeft");
+        colorSensor=hardwareMap.get(ColorSensor.class, "color");
 
         Rightfrontmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Rightbackmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -26,16 +29,18 @@ public class MacanumAuto extends OpMode {
 
 
     public void loop() {
-        while (Leftfrontmotor.getCurrentPosition()<1000) {
-            telemetry.addData("Encoderposition",Rightfrontmotor.getCurrentPosition());
-            telemetry.addData("Encoderposition",Rightbackmotor.getCurrentPosition());
-            telemetry.addData("Encoderposition",Leftfrontmotor.getCurrentPosition());
-            telemetry.addData("Encoderposition",Leftbackmotor.getCurrentPosition());
+        telemetry.addData("Green",colorSensor.green());
 
-            Rightfrontmotor.setPower(-1);
-            Rightbackmotor.setPower(1);
+        Rightfrontmotor.setPower(0);
+        if(colorSensor.green()>700){
+            Rightfrontmotor.setPower(1);
+
+        }
+        if(colorSensor.blue()>700){
             Leftfrontmotor.setPower(1);
-            Leftbackmotor.setPower(-1);
+        }
+        if(colorSensor.red()>700){
+            Rightbackmotor.setPower(1);
         }
 
     }

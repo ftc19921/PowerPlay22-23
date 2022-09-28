@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -14,7 +15,7 @@ public class MacanumDrive extends OpMode {
     DcMotor frontLeftMotor;
     DcMotor backLeftMotor;
     DcMotor armMotor;
-    Servo gripperServo;
+    CRServo gripperServo;
 
     @Override
     public void init() {
@@ -23,12 +24,12 @@ public class MacanumDrive extends OpMode {
         backRightMotor = hardwareMap.get(DcMotor.class, "motorBackRight");
         backLeftMotor = hardwareMap.get(DcMotor.class, "motorBackLeft");
         armMotor = hardwareMap.get(DcMotor.class, "armMotor");
-        gripperServo= hardwareMap.get(Servo.class,"gripperServo");
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        gripperServo= hardwareMap.get(CRServo.class,"gripperServo");
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 
@@ -45,11 +46,11 @@ public class MacanumDrive extends OpMode {
 
         if(gamepad2.x) {
 
-            gripperServo.setPosition(0.3);
+            gripperServo.setPower(0.4);
 
         }
         if(gamepad2.y){
-            gripperServo.setPosition(0);
+            gripperServo.setPower(-0.4);
 
         }
         if (gamepad2.a) {
@@ -75,5 +76,6 @@ public class MacanumDrive extends OpMode {
 
         }
         armMotor.setPower(armMotorSpeed);
+        gripperServo.setPower(0);
     }
 }
