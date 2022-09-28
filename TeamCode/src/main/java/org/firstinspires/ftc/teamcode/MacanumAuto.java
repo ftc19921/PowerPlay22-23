@@ -32,16 +32,15 @@ public class MacanumAuto extends OpMode {
         telemetry.addData("Green",colorSensor.green());
 
         Rightfrontmotor.setPower(0);
-        if(colorSensor.green()>700){
-            Rightfrontmotor.setPower(1);
 
-        }
-        if(colorSensor.blue()>700){
+        if(colorSensor.blue()>4700) {
             Leftfrontmotor.setPower(1);
-        }
-        if(colorSensor.red()>700){
+        }else if(colorSensor.red()>4700){
             Rightbackmotor.setPower(1);
+        }else{
+            Rightfrontmotor.setPower(1);
         }
+
 
     }
 }
