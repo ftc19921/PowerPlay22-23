@@ -7,15 +7,18 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.mechanisms.Arm;
 import org.firstinspires.ftc.teamcode.mechanisms.MecanumDrive;
 
 @TeleOp(name = "TestWiring")
 public class TestWiring extends OpMode {
     MecanumDrive mecDrive = new MecanumDrive();
+        Arm arm =new Arm();
 
     @Override
     public void init() {
         mecDrive.init(hardwareMap);
+        arm.init(hardwareMap);
     }
 
     @Override
@@ -34,9 +37,28 @@ public class TestWiring extends OpMode {
         }else{
             mecDrive.setMotorSpeeds(0,0,0,0,telemetry);
         }
+        if(gamepad1.dpad_up){
+            arm.raise();
+
+        }else if(gamepad1.dpad_down){
+            arm.lower();
+        }else{
+            arm.stopArm();
+        }
+        if(gamepad1.dpad_left){
+            arm.release();
+        }else if(gamepad1.dpad_right){
+            arm.grip();
+        }else{
+            arm.stopGripper();
+        }
+
+
         telemetry.addLine("A = front right");
         telemetry.addLine("b = front left");
         telemetry.addLine("y = back left");
         telemetry.addLine("x = back right");
+        telemetry.addLine("left/right = gripper");
+        telemetry.addLine("up/down = arm");
     }
 }
