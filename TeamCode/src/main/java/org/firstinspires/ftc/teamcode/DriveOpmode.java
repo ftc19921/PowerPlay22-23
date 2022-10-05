@@ -35,13 +35,13 @@ public class DriveOpmode extends OpMode {
             arm.stopArm();
         }
         double rotateAmount;
-        if (gamepad1.right_bumper) {
-            rotateAmount = 1;
-        } else if (gamepad1.left_bumper) {
-            rotateAmount = -1;
-        } else {
-            rotateAmount = 0;
+        if(gamepad1.left_trigger > gamepad1.right_trigger){
+            rotateAmount = -gamepad1.left_trigger;
         }
+        else{
+            rotateAmount = gamepad1.right_trigger;
+        }
+
         mecanumDrive.drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, rotateAmount);
     }
 }

@@ -11,7 +11,10 @@ public class MacanumAuto extends OpMode {
     DcMotor Rightbackmotor;
     DcMotor Leftfrontmotor;
     DcMotor Leftbackmotor;
+    DcMotor armMotor;
     ColorSensor colorSensor;
+    double direction=0;
+
     public void init() {
 
 
@@ -19,59 +22,59 @@ public class MacanumAuto extends OpMode {
         Rightbackmotor=hardwareMap.get(DcMotor.class,"motorBackRight");
         Leftfrontmotor=hardwareMap.get(DcMotor.class,"motorFrontLeft");
         Leftbackmotor=hardwareMap.get(DcMotor.class,"motorBackLeft");
+        armMotor=hardwareMap.get(DcMotor.class,"armMotor");
         colorSensor=hardwareMap.get(ColorSensor.class, "color");
         Rightfrontmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Rightbackmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Leftfrontmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Leftbackmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Rightfrontmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Rightbackmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Leftfrontmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Leftbackmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Rightfrontmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Rightbackmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Leftfrontmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Leftbackmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
     }
 
 
     public void loop() {
-
-
-        telemetry.addData("rightbackposition" ,Rightbackmotor.getCurrentPosition());
-        telemetry.addData("rightfrontposition" ,Rightfrontmotor.getCurrentPosition());
-        telemetry.addData("leftbackposition" ,Leftbackmotor.getCurrentPosition());
-        telemetry.addData("leftfrontposition" ,Leftfrontmotor.getCurrentPosition());
-        telemetry.addData("red",colorSensor.red());
-        telemetry.addData("blue",colorSensor.blue());
-
-
-
-        if(colorSensor.red()<1000 && colorSensor.blue()<1000&&Leftbackmotor.getCurrentPosition()<1000) {
-            Rightfrontmotor.setPower(-1);
-            Leftfrontmotor.setPower(1);
-            Rightbackmotor.setPower(-1);
-            Leftbackmotor.setPower(1);
+        telemetry.addData("leftbackposition", -Leftbackmotor.getCurrentPosition());
+        telemetry.addData("direction",direction);
+        telemetry.addData("red", colorSensor.red());
+        telemetry.addData("blue", colorSensor.blue());
+        if(-Leftbackmotor.getCurrentPosition()<2000){
+            armMotor.setPower(0.2);
+            Rightfrontmotor.setPower(0.4);
+            Rightbackmotor.setPower(0.4);
+            Leftbackmotor.setPower(-0.4);
+            Leftfrontmotor.setPower(-0.4);
+        }else{
+            armMotor.setPower(0);
+            if (colorSensor.red() > 1000&&direction!=2) {
+                direction = 1;
+            }else if (colorSensor.blue() > 1000&&direction!=1) {
+                direction = 2;
+            } else {
+                direction = 3;
+            }
         }
-        if(colorSensor.red()>1000&&Leftbackmotor.getCurrentPosition()<10000){
-            Rightfrontmotor.setPower(1);
-            Leftfrontmotor.setPower(1);
-            Rightbackmotor.setPower(-1);
-            Leftbackmotor.setPower(-1);
-
-
-        }else if(colorSensor.blue()>1000){
-            Rightfrontmotor.setPower(-1);
-            Leftfrontmotor.setPower(-1);
-            Rightbackmotor.setPower(1);
-            Leftbackmotor.setPower(1);
-
-        }
-        if(Leftbackmotor.getCurrentPosition()>10000){
-            Rightfrontmotor.setPower(0);
-            Leftfrontmotor.setPower(0);
-            Rightbackmotor.setPower(0);
-            Leftbackmotor.setPower(0);
-        }
-
+    if(direction==1&&-Leftbackmotor.getCurrentPosition()>500){
+        Rightfrontmotor.setPower(-1);
+        Rightbackmotor.setPower(1);
+        Leftbackmotor.setPower(1);
+        Leftfrontmotor.setPower(-1);
+    }else if(direction==2&&-Leftbackmotor.getCurrentPosition()<4000){
+        Rightfrontmotor.setPower(1);
+        Rightbackmotor.setPower(-1);
+        Leftbackmotor.setPower(-1);
+        Leftfrontmotor.setPower(1);
+    }else{
+        Rightfrontmotor.setPower(0);
+        Rightbackmotor.setPower(0);
+        Leftbackmotor.setPower(0);
+        Leftfrontmotor.setPower(0);
+    }
 
 
 
