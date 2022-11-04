@@ -52,9 +52,9 @@ public class DriveOpmode extends OpMode {
         } else {
             arm.stopGripper();
         }
-        if (gamepad2.a) {
+        if (gamepad2.b) {
             arm.lower();
-        } else if (gamepad2.b && !touchSensor.isPressed()) {
+        } else if (gamepad2.a && !touchSensor.isPressed()) {
             arm.raise();
         } else {
             arm.stopArm();
