@@ -23,17 +23,18 @@ public class MecanumDrive {
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 
 
     public void drive(double forward, double right, double rotate) {
-        double frontLeftPower = forward + right + rotate;
-        double frontRightPower = forward - right - rotate;
-        double backRightPower = forward + right - rotate;
-        double backLeftPower = forward - right + rotate;
+        double frontLeftPower = forward - rotate;
+        double frontRightPower = forward + rotate;
+        double backRightPower = forward+ rotate;
+        double backLeftPower = forward- rotate;
+
         double maxSpeed = 1.0;
 
         maxSpeed = Math.max(maxSpeed, Math.abs(frontLeftPower));
@@ -63,4 +64,5 @@ public class MecanumDrive {
         telemetry.addData("Back left", backLeftMotor.getCurrentPosition());
 
     }
+
 }
