@@ -31,22 +31,23 @@ public class EncoderTest extends OpMode {
     public void loop() {
 
         telemetry.addData("motor_position" ,EncoderMotor.getCurrentPosition() );
+
         telemetry.addData("motor2_position" ,EncoderMotor2.getCurrentPosition() );
         telemetry.addData("motor3_position" ,EncoderMotor3.getCurrentPosition() );
         telemetry.addData("motor4_position" ,EncoderMotor4.getCurrentPosition() );
 
-        EncoderMotor.setPower(1);
+        EncoderMotor.setPower(0.2);
 
 
-        EncoderMotor2.setPower(1);
-
-
-
-        EncoderMotor3.setPower(1);
+        EncoderMotor2.setPower(0.2);
 
 
 
-        EncoderMotor4.setPower(1);
+        EncoderMotor3.setPower(0.2);
+
+
+
+        EncoderMotor4.setPower(0.2);
 
 
 

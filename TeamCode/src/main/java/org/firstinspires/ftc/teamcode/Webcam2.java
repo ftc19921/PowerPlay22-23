@@ -31,7 +31,7 @@ public class Webcam2 extends OpMode {
     Double coneColor=0.0;
     OpenCvWebcam webcam;
     int isStarted;
-    int stage=1;
+    int stage=0;
     int step=1;
     @Override
     public void init() {
@@ -75,9 +75,26 @@ public class Webcam2 extends OpMode {
 
     public void loop(){
        isStarted=1;
-       telemetry.addData("working",RFM.getCurrentPosition());
+       telemetry.addData("RightFront",RFM.getCurrentPosition());
+        telemetry.addData("RightBack",RBM.getCurrentPosition());
+        telemetry.addData("LeftFront",LFM.getCurrentPosition());
+        telemetry.addData("LeftBack",LBM.getCurrentPosition());
+        if(stage==0){
+            if(RFM.getCurrentPosition()<=200){
+                RFM.setPower(-0.5);
+                RBM.setPower(-0.5);
+                LFM.setPower(0.5);
+                LBM.setPower(0.5);
+
+            }else{
+                RFM.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                RFM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                stage=1;
+
+            }
+        }
        if (stage==1){
-           telemetry.addData("working",RFM.getCurrentPosition());
+
            if(coneColor==3.0&&RFM.getCurrentPosition()<=3000){
                RFM.setPower(0.5);
                RBM.setPower(-0.5);
@@ -162,9 +179,9 @@ public class Webcam2 extends OpMode {
 
 
 
-            Rect MiddleRectBlue =new Rect(120,95,100,50);
-            Rect MiddleRectGreen =new Rect(120,95,100,50);
-            Rect MiddleRectRed =new Rect(120,95,100,50);
+            Rect MiddleRectBlue =new Rect(195,107,50,25);
+            Rect MiddleRectGreen =new Rect(195,107,50,25);
+            Rect MiddleRectRed =new Rect(195,107,50,25);
 
 
             input.copyTo(outPut);

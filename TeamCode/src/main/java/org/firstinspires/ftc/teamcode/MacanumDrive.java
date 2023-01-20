@@ -58,57 +58,45 @@ public class MacanumDrive extends OpMode {
         FLM.setPower(-forward - sideways + rotate);
         BRM.setPower(forward + sideways + rotate);
         BLM.setPower(-forward + sideways + rotate);
-
-
-
-
         if (gamepad1.right_trigger>gamepad1.left_trigger){
-            rotate=gamepad1.right_trigger;
+            rotate=-gamepad1.right_trigger;
         }else{
-            rotate=-gamepad1.left_trigger;
+            rotate=gamepad1.left_trigger;
         }
-
-        if(gamepad2.dpad_left){
+        if(gamepad2.y){
             ForBarMotor.setPower(0.6);
             ForbarPosition=2;
-        }else if(gamepad2.dpad_right){
+        }else if(gamepad2.a){
             ForBarMotor.setPower(-0.3);
             ForbarPosition=1;
-        }else if(!gamepad2.dpad_right&& ForbarPosition==1) {
+        }else if(!gamepad2.a&& ForbarPosition==1) {
             ForBarMotor.setPower(0);
         }
-        if (!gamepad2.dpad_left&&ForbarPosition==2){
+        if (!gamepad2.y&&ForbarPosition==2){
             ForBarMotor.setPower(0.3);
         }
-        if(gamepad2.dpad_down&&touchSensor2.isPressed()){
-            SlideMotor.setPower(-1);
-        }else if(gamepad2.dpad_up&&touchSensor.isPressed()){
+        if(gamepad2.dpad_down&&touchSensor.isPressed()){
             SlideMotor.setPower(1);
+        }else if(gamepad2.dpad_up&&touchSensor2.isPressed()){
+            SlideMotor.setPower(-1);
+        }else if(!touchSensor.isPressed()){
+            SlideMotor.setPower(-0.3);
         }else{
             SlideMotor.setPower(0);
         }
         telemetry.addData("pressed",touchSensor.isPressed());
         telemetry.addData("pressed2",touchSensor2.isPressed());
-
         //Servos
-        if(gamepad2.left_trigger>0){
-
-            horizontalServo.setPower(-0.6);
-        }else if(gamepad2.right_trigger>0){
-
-            horizontalServo.setPower(0.6);
-
-        }else{
-
-            horizontalServo.setPower(0);
-
-        }
-        if(gamepad2.left_bumper){
-            virticleServo.setPower(0.6);
-        }else if(gamepad2.right_bumper){
-            virticleServo.setPower(-0.6);
+        if(gamepad2.right_trigger>0){
+            virticleServo.setPower(0.8);
+            horizontalServo.setPower(-0.8);
+        }else if(gamepad2.left_trigger>0){
+            virticleServo.setPower(-0.8);
+            horizontalServo.setPower(0.8);
         }else{
             virticleServo.setPower(0);
+            horizontalServo.setPower(0);
+
         }
 
 

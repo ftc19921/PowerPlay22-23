@@ -7,7 +7,10 @@ import android.graphics.MaskFilter;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.sun.tools.javac.resources.compiler;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -28,18 +31,30 @@ public class AutoCone extends OpMode {
     DcMotor RBM;
     DcMotor LFM;
     DcMotor LBM;
+    DcMotor forbar;
+    DcMotor lift;
+    CRServo intake1;
+    CRServo intake2;
+    TouchSensor touchSensor;
     Double coneColor=0.0;
+    Double limit=1.0;
     OpenCvWebcam webcam;
+    ColorSensor colorSensor;
     int isStarted;
     int stage=1;
     int step=1;
     @Override
     public void init() {
-
+        touchSensor=hardwareMap.get(TouchSensor.class,"touchsensor2");
+        colorSensor=hardwareMap.get(ColorSensor.class,"color");
         RFM=hardwareMap.get(DcMotor.class,"motorFrontRight");
         RBM=hardwareMap.get(DcMotor.class,"motorBackRight");
         LFM=hardwareMap.get(DcMotor.class,"motorFrontLeft");
         LBM=hardwareMap.get(DcMotor.class,"motorBackLeft");
+        lift=hardwareMap.get(DcMotor.class,"armMotor");
+        forbar=hardwareMap.get(DcMotor.class,"forBar");
+        intake1=hardwareMap.get(CRServo.class,"gripperServo");
+        intake2=hardwareMap.get(CRServo.class,"virtical");
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam1"), cameraMonitorViewId);
 
@@ -74,45 +89,86 @@ public class AutoCone extends OpMode {
 
 
     public void loop(){
+
+        if (!touchSensor.isPressed()){
+            limit=2.0;
+        }else{
+            limit=1.0;
+        }
         isStarted=1;
         telemetry.addData("RFM",RFM.getCurrentPosition());
         telemetry.addData("stage=",stage);
+        telemetry.addData("blue",colorSensor.blue());
+        telemetry.addData("red",colorSensor.red());
         if(stage==1){
-            if(RFM.getCurrentPosition()>=-3000){
+            if(RFM.getCurrentPosition()>=-7400){
                 RFM.setPower(-0.5);
                 RBM.setPower(-0.5);
                 LFM.setPower(0.5);
                 LBM.setPower(0.5);
+                if(limit==1.0){
+                    lift.setPower(-0.6);
+                }else{
+                    lift.setPower(0);
+                }
             }else{
+                lift.setPower(-0.1);
                 stage=2;
             }
         }
         if(stage==2){
-            if(RFM.getCurrentPosition()<=-2500){
-                RFM.setPower(0.3);
-                RBM.setPower(0.3);
-                LFM.setPower(0.3);
-                LBM.setPower(0.3);
-            }else{
-                stage=3;
-            }
-        }
-        if(stage==3){
-            if(RFM.getCurrentPosition()>=-3000){
+            if(RFM.getCurrentPosition()>=-8900){
                 RFM.setPower(-0.3);
                 RBM.setPower(-0.3);
                 LFM.setPower(-0.3);
                 LBM.setPower(-0.3);
+
+
+                forbar.setPower(0.7);
+
+            }else{
+                stage=5;
+                forbar.setPower(0.2);
+            }
+        }
+        if(stage==5){
+            if(RFM.getCurrentPosition()>=-9400) {
+                RFM.setPower(-0.2);
+                RBM.setPower(-0.2);
+                LFM.setPower(0.2);
+                LBM.setPower(0.2);
+
+                intake1.setPower(-0.3);
+
+                intake2.setPower(0.3);
+
+
+            }else {
+
+
+                stage=3;
+            }
+
+        }
+        if(stage==3){
+            if(RFM.getCurrentPosition()<=-5200){
+                RFM.setPower(0.5);
+                RBM.setPower(0.5);
+                LFM.setPower(-0.5);
+                LBM.setPower(-0.5);
+
+
+                lift.setPower(0.1);
             }else{
                 stage=4;
             }
         }
         if(stage==4&&coneColor==2){
-            if(RFM.getCurrentPosition()>=-4500){
+            if(RFM.getCurrentPosition()<=-2000){
                 RFM.setPower(0.3);
                 RBM.setPower(-0.3);
-                LFM.setPower(-0.3);
-                LBM.setPower(0.3);
+                LFM.setPower(0.3);
+                LBM.setPower(-0.3);
             }else{
                 RFM.setPower(0);
                 RBM.setPower(0);
@@ -121,11 +177,11 @@ public class AutoCone extends OpMode {
             }
         }
         if(stage==4&&coneColor==3){
-            if(RFM.getCurrentPosition()<=-1500){
+            if(RFM.getCurrentPosition()>=-7000){
                 RFM.setPower(-0.3);
                 RBM.setPower(0.3);
-                LFM.setPower(0.3);
-                LBM.setPower(-0.3);
+                LFM.setPower(-0.3);
+                LBM.setPower(0.3);
             }else{
 
                 RFM.setPower(0);
@@ -137,6 +193,10 @@ public class AutoCone extends OpMode {
 
         }
         if(stage==4&&coneColor==4){
+            RFM.setPower(0);
+            RBM.setPower(0);
+            LFM.setPower(0);
+            LBM.setPower(0);
 
         }
 
@@ -177,9 +237,9 @@ public class AutoCone extends OpMode {
 
 
 
-            Rect MiddleRectBlue =new Rect(120,95,100,50);
-            Rect MiddleRectGreen =new Rect(120,95,100,50);
-            Rect MiddleRectRed =new Rect(120,95,100,50);
+            Rect MiddleRectBlue =new Rect(120,115,100,50);
+            Rect MiddleRectGreen =new Rect(120,115,100,50);
+            Rect MiddleRectRed =new Rect(120,115,100,50);
 
 
             input.copyTo(outPut);
