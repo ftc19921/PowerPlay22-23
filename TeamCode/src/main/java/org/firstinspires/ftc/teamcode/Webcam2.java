@@ -80,11 +80,11 @@ public class Webcam2 extends OpMode {
         telemetry.addData("LeftFront",LFM.getCurrentPosition());
         telemetry.addData("LeftBack",LBM.getCurrentPosition());
         if(stage==0){
-            if(RFM.getCurrentPosition()<=200){
-                RFM.setPower(-0.5);
-                RBM.setPower(-0.5);
-                LFM.setPower(0.5);
-                LBM.setPower(0.5);
+            if(RFM.getCurrentPosition()>=-200){
+                RFM.setPower(-0.2);
+                RBM.setPower(-0.2);
+                LFM.setPower(0.2);
+                LBM.setPower(0.2);
 
             }else{
                 RFM.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -96,21 +96,21 @@ public class Webcam2 extends OpMode {
        if (stage==1){
 
            if(coneColor==3.0&&RFM.getCurrentPosition()<=3000){
-               RFM.setPower(0.5);
-               RBM.setPower(-0.5);
-               LFM.setPower(0.5);
-               LBM.setPower(-0.5);
+               RFM.setPower(0.2);
+               RBM.setPower(-0.2);
+               LFM.setPower(0.2);
+               LBM.setPower(-0.2);
 
            }else if(coneColor==2.0&&RFM.getCurrentPosition()>=-3000){
-               RFM.setPower(-0.5);
-               RBM.setPower(0.5);
-               LFM.setPower(-0.5);
-               LBM.setPower(0.5);
+               RFM.setPower(-0.2);
+               RBM.setPower(0.2);
+               LFM.setPower(-0.2);
+               LBM.setPower(0.2);
            }else if(coneColor==4&&RFM.getCurrentPosition()>=-3000){
-               RFM.setPower(-0.5);
-               RBM.setPower(-0.5);
-               LFM.setPower(0.5);
-               LBM.setPower(0.5);
+               RFM.setPower(-0.2);
+               RBM.setPower(-0.2);
+               LFM.setPower(0.2);
+               LBM.setPower(0.2);
            }else{
                stage=2;
            }
@@ -122,16 +122,17 @@ public class Webcam2 extends OpMode {
        }
        if(stage ==2){
            if(coneColor==3.0&&RFM.getCurrentPosition()>=0){
-               RFM.setPower(-0.5);
-               RBM.setPower(-0.5);
-               LFM.setPower(0.5);
-               LBM.setPower(0.5);
+               RFM.setPower(-0.2);
+               RBM.setPower(-0.2);
+               LFM.setPower(0.2);
+               LBM.setPower(0.2);
 
            }else if(coneColor==2.0&&RFM.getCurrentPosition()>=-6000){
-               RFM.setPower(-0.5);
-               RBM.setPower(-0.5);
-               LFM.setPower(0.5);
-               LBM.setPower(0.5);
+               RFM.setPower(-0.2);
+               RBM.setPower(-0.2);
+               LFM.setPower(0.2);
+               LBM.setPower(0.2);
+
 
            }else{
                RFM.setPower(0);

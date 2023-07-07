@@ -26,7 +26,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 import org.openftc.easyopencv.OpenCvWebcam;
 @Autonomous
-public class AutoCone extends OpMode {
+public class AutoConeRight extends OpMode {
     DcMotor RFM;
     DcMotor RBM;
     DcMotor LFM;
@@ -121,11 +121,11 @@ public class AutoCone extends OpMode {
             }
         }
         if(stage==2){
-            if(RFM.getCurrentPosition()>=-1200){
-                RFM.setPower(-0.2);
-                RBM.setPower(0.2);
-                LFM.setPower(-0.2);
-                LBM.setPower(0.2);
+            if(RFM.getCurrentPosition()<=1200){
+                RFM.setPower(0.2);
+                RBM.setPower(-0.2);
+                LFM.setPower(0.2);
+                LBM.setPower(-0.2);
 
 
                 forbar.setPower(0.4);
@@ -182,7 +182,7 @@ public class AutoCone extends OpMode {
 
         if(stage==7){
             if(coneColor==2){
-                if(RFM.getCurrentPosition()>=-1500){
+                if(RFM.getCurrentPosition()>=-4400){
                     RFM.setPower(-0.2);
                     RBM.setPower(0.2);
                     LFM.setPower(-0.2);
@@ -199,7 +199,7 @@ public class AutoCone extends OpMode {
                 }
             }
             if(coneColor==3){
-                if(RFM.getCurrentPosition()<4400) {
+                if(RFM.getCurrentPosition()<1500) {
                     RFM.setPower(0.5);
                     RBM.setPower(-0.5);
 
@@ -216,12 +216,12 @@ public class AutoCone extends OpMode {
                     forbar.setPower(-0.2);
                 }
             }if(coneColor==4){
-                if(RFM.getCurrentPosition()<1900) {
+                if(RFM.getCurrentPosition()>-1900) {
 
-                    RFM.setPower(0.2);
-                    RBM.setPower(-0.2);
-                    LFM.setPower(0.2);
-                    LBM.setPower(-0.2);
+                    RFM.setPower(-0.2);
+                    RBM.setPower(0.2);
+                    LFM.setPower(-0.2);
+                    LBM.setPower(0.2);
                 }else {
                     RFM.setPower(0);
                     RBM.setPower(0);

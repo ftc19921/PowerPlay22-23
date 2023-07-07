@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.Range;
 
 @TeleOp
-public class MacanumDrive extends OpMode {
+public class onecontroler extends OpMode {
     double forward;
     double sideways;
     double rotate;
@@ -52,6 +52,7 @@ public class MacanumDrive extends OpMode {
 
     @Override
     public void loop() {
+        speed=1;
         telemetry.addData("speed",speed);
 
         forward =gamepad1.left_stick_y;
@@ -66,21 +67,21 @@ public class MacanumDrive extends OpMode {
         }else{
             rotate=gamepad1.left_trigger*speed;
         }
-        if(gamepad2.y){
+        if(gamepad1.y){
             ForBarMotor.setPower(0.6);
             ForbarPosition=2;
-        }else if(gamepad2.a){
+        }else if(gamepad1.a){
             ForBarMotor.setPower(-0.3);
             ForbarPosition=1;
-        }else if(!gamepad2.a&& ForbarPosition==1) {
+        }else if(!gamepad1.a&& ForbarPosition==1) {
             ForBarMotor.setPower(0);
         }
-        if (!gamepad2.y&&ForbarPosition==2){
+        if (!gamepad1.y&&ForbarPosition==2){
             ForBarMotor.setPower(0.3);
         }
-        if(gamepad2.dpad_down&&!touchSensor.isPressed()){
+        if(gamepad1.dpad_down&&!touchSensor.isPressed()){
             SlideMotor.setPower(1);
-        }else if(gamepad2.dpad_up&&!touchSensor2.isPressed()){
+        }else if(gamepad1.dpad_up&&!touchSensor2.isPressed()){
             SlideMotor.setPower(-1);
         }else if(touchSensor.isPressed()){
             SlideMotor.setPower(-0.3);
@@ -90,10 +91,10 @@ public class MacanumDrive extends OpMode {
         telemetry.addData("pressed",touchSensor.isPressed());
         telemetry.addData("pressed2",touchSensor2.isPressed());
         //Servos
-        if(gamepad2.right_trigger>0){
+        if(gamepad1.right_bumper){
             virticleServo.setPower(1);
             horizontalServo.setPower(-1);
-        }else if(gamepad2.left_trigger>0){
+        }else if(gamepad1.left_bumper){
             virticleServo.setPower(-1);
             horizontalServo.setPower(1);
         }else{
@@ -103,14 +104,7 @@ public class MacanumDrive extends OpMode {
         }
 
 
-        if(gamepad1.right_bumper){
-            speed=0.5;
-        }else if(gamepad1.left_bumper){
-            speed=2;
-        }else{
-            speed=1;
 
-        }
 
 
 
