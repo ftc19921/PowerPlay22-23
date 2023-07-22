@@ -3,11 +3,16 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
 
 public class KiwiDrive2023 extends OpMode {
+    public static final double ARM_POWER_UP = -0.5;
+    public static final double ARM_POWER_DOWN = 0.5;
+    public static final double OPEN_CLAW = 1.0;
+    public static final double CLOSE_CLAW = -1.0;
     DcMotor F;
     DcMotor BL;
     DcMotor BR;
@@ -29,6 +34,10 @@ public class KiwiDrive2023 extends OpMode {
         F = hardwareMap.get(DcMotor.class, "Motor3");
         BL = hardwareMap.get(DcMotor.class, "Motor2");
         BR = hardwareMap.get(DcMotor.class, "Motor1");
+
+        F.setDirection(DcMotorSimple.Direction.REVERSE);
+        BL.setDirection(DcMotorSimple.Direction.REVERSE);
+        BR.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
     }
@@ -61,22 +70,28 @@ public class KiwiDrive2023 extends OpMode {
         BL.setPower(BLPower);
         telemetry.addData("BRpower", BRPower);
         telemetry.addData("BLpower", BLPower);
+
         telemetry.addData("Fpower", FPower);
 
-        if(gamepad2.left_trigger>gamepad2.right_trigger){
-            Arm.setPower(1);
-            ArmUp=2;
+        if (gamepad2.dpad_up) {
+            Arm.setPower(ARM_POWER_UP);
+        } else if (gamepad2.dpad_down) {
+            Arm.setPower(ARM_POWER_DOWN);
+        } else {
+            Arm.setPower(0);
         }
-        if(gamepad2.right_trigger>gamepad2.left_trigger){
-            Arm.setPower(-1);
-            ArmUp=1;
-        }else if(ArmUp==1){
-            Arm.setPower(1);
+        if(gamepad2.a){
+            Claw.setPosition(OPEN_CLAW);
+        }else if(gamepad2.b){
+            Claw.setPosition(CLOSE_CLAW);
+
         }
+        telemetry.addData("left trigger", gamepad2.left_trigger);
+        telemetry.addData("right trigger", gamepad2.right_trigger);
 
 
 
-}
+    }
 
     double findAbsoluteMax(double power1,double power2,double power3){
 
