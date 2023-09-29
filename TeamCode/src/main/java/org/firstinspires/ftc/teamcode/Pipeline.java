@@ -12,7 +12,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvWebcam;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-class Pipeline extends OpenCvPipeline
+public class Pipeline extends OpenCvPipeline
 {
     @Override
     public Mat processFrame(Mat input)

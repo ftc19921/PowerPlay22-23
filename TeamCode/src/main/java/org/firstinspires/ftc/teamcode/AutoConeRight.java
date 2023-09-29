@@ -45,6 +45,7 @@ public class AutoConeRight extends OpMode {
     int step=1;
     @Override
     public void init() {
+        /*
         touchSensor=hardwareMap.get(TouchSensor.class,"touchsensor2");
         colorSensor=hardwareMap.get(ColorSensor.class,"color");
         RFM=hardwareMap.get(DcMotor.class,"motorFrontRight");
@@ -55,11 +56,14 @@ public class AutoConeRight extends OpMode {
         forbar=hardwareMap.get(DcMotor.class,"forBar");
         intake1=hardwareMap.get(CRServo.class,"gripperServo");
         intake2=hardwareMap.get(CRServo.class,"virtical");
+
+         */
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam1"), cameraMonitorViewId);
 
         webcam.setPipeline(new Pipeline());
         webcam.setMillisecondsPermissionTimeout(2500);
+        /*
         RFM.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         RBM.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LFM.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -69,6 +73,8 @@ public class AutoConeRight extends OpMode {
         LFM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         LBM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+
+         */
 
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener(){
 
@@ -89,7 +95,7 @@ public class AutoConeRight extends OpMode {
 
 
     public void loop(){
-
+/*
         if (!touchSensor.isPressed()){
             limit=2.0;
         }else{
@@ -232,7 +238,7 @@ public class AutoConeRight extends OpMode {
             }
         }
 
-
+*/
 
     }
 

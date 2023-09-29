@@ -1,9 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.os.Debug;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 @TeleOp
 
@@ -11,8 +16,8 @@ public class KiwiDrive2023 extends OpMode {
     DcMotor F;
     DcMotor BL;
     DcMotor BR;
-    DcMotor Arm;
-    Servo Claw;
+    DcMotorEx Arm;
+    CRServo Claw;
     double ArmUp;
     double BRPower;
     double BLPower;
@@ -21,17 +26,17 @@ public class KiwiDrive2023 extends OpMode {
     double JoyX;
     double rJoyX;
     double maxPower;
+    int armpos;
 
 
     public void init() {
-        Arm =  hardwareMap.get(DcMotor.class,"ArmMotor");
-        Claw = hardwareMap.get(Servo.class,"Claw");
+        Arm =  hardwareMap.get(DcMotorEx.class,"ArmMotor");
+        Claw = hardwareMap.get(CRServo.class,"Claw");
         F = hardwareMap.get(DcMotor.class, "Motor3");
         BL = hardwareMap.get(DcMotor.class, "Motor2");
         BR = hardwareMap.get(DcMotor.class, "Motor1");
-
-
-    }
+        Arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        }
 
     @Override
     public void loop() {
@@ -56,22 +61,31 @@ public class KiwiDrive2023 extends OpMode {
             BRPower /= maxPower;
 
         }
-        F.setPower(FPower);
-        BR.setPower(BRPower);
-        BL.setPower(BLPower);
+        F.setPower(-FPower);
+        BR.setPower(-BRPower);
+        BL.setPower(-BLPower);
         telemetry.addData("BRpower", BRPower);
         telemetry.addData("BLpower", BLPower);
         telemetry.addData("Fpower", FPower);
 
         if(gamepad2.left_trigger>gamepad2.right_trigger){
-            Arm.setPower(1);
-            ArmUp=2;
+            Arm.setVelocity(500);
+            Arm.setTargetPosition(400);
+            Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }else if(gamepad2.right_trigger>gamepad2.left_trigger) {
+            Arm.setVelocity(0);
+            Arm.setTargetPosition(0);
+            Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
-        if(gamepad2.right_trigger>gamepad2.left_trigger){
-            Arm.setPower(-1);
-            ArmUp=1;
-        }else if(ArmUp==1){
-            Arm.setPower(1);
+
+        telemetry.addData("arm position",Arm.getCurrentPosition());
+        telemetry.addData("arm target position",Arm.getTargetPosition());
+        if(gamepad2.a){
+            Claw.setPower(1);
+        } else if(gamepad2.b){
+            Claw.setPower(-1);
+        }else{
+            Claw.setPower(0);
         }
 
 
