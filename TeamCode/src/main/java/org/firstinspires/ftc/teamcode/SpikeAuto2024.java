@@ -167,14 +167,14 @@ public class SpikeAuto2024 extends OpMode {
 
             Imgproc.cvtColor(input, YCBCr, Imgproc.COLOR_RGBA2RGB);
 
-            Rect MiddleRectBlue = new Rect(135, 60, 25, 25);
-            Rect MiddleRectRed = new Rect(135, 60, 25, 25);
+            Rect MiddleRectBlue = new Rect(115, 60, 45, 45);
+            Rect MiddleRectRed = new Rect(115, 60, 45, 45);
 
-            Rect LeftRectBlue = new Rect(245, 60, 25, 25);
-            Rect LeftRectRed = new Rect(245, 60, 25, 25);
+            Rect LeftRectBlue = new Rect(225, 60, 45, 45);
+            Rect LeftRectRed = new Rect(225, 60, 45, 45);
 
-            Rect RightRectBlue = new Rect(45, 60, 25, 25);
-            Rect RightRectRed = new Rect(45, 60, 25, 25);
+            Rect RightRectBlue = new Rect(25, 60, 45, 45);
+            Rect RightRectRed = new Rect(25, 60, 45, 45);
 
 
             input.copyTo(outPut);

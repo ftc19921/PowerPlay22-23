@@ -69,9 +69,9 @@ public class KiwiDrive2023 extends OpMode {
         telemetry.addData("BLpower", BLPower);
         telemetry.addData("Fpower", FPower);
 
-        if(gamepad2.left_trigger>gamepad2.right_trigger&&armPos<2&&isPressed==false){
+        if(gamepad2.left_trigger>gamepad2.right_trigger&&armPos<2){
             armPos++;
-        }else if(gamepad2.right_trigger>gamepad2.left_trigger&&armPos>0&&isPressed==false) {
+        }else if(gamepad2.right_trigger>gamepad2.left_trigger&&armPos>0) {
             armPos--;
         }
         if(gamepad2.right_trigger==gamepad2.left_trigger){
