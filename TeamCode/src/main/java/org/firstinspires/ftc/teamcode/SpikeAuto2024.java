@@ -245,6 +245,11 @@ public class SpikeAuto2024 extends OpMode {
                 telemetry.addLine("Team prop is on the Left");
             }else if(midcol > leftcol && Rightcol < midcol){
             telemetry.addLine("Team prop is on the Right");
+            if (BR.getCurrentPosition() >= 12000){
+                ForwardPower = 0;
+            }else{
+                ForwardPower = 1;
+            }
             }else if(midcol < leftcol && Rightcol < leftcol){
             telemetry.addLine("Team prop is on the Middle");
 
