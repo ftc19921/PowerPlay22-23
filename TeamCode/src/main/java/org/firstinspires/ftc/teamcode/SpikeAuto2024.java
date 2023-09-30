@@ -167,14 +167,14 @@ public class SpikeAuto2024 extends OpMode {
 
             Imgproc.cvtColor(input, YCBCr, Imgproc.COLOR_RGBA2RGB);
 
-            Rect MiddleRectBlue = new Rect(45, 60, 25, 25);
-            Rect MiddleRectRed = new Rect(45, 60, 25, 25);
+            Rect MiddleRectBlue = new Rect(135, 60, 25, 25);
+            Rect MiddleRectRed = new Rect(135, 60, 25, 25);
 
-            Rect RightRectBlue = new Rect(135, 60, 25, 25);
-            Rect RightRectRed = new Rect(135, 60, 25, 25);
+            Rect LeftRectBlue = new Rect(245, 60, 25, 25);
+            Rect LeftRectRed = new Rect(245, 60, 25, 25);
 
-            Rect LeftRectBlue = new Rect(195+50, 60, 25, 25);
-            Rect LeftRectRed = new Rect(195+50, 60, 25, 25);
+            Rect RightRectBlue = new Rect(45, 60, 25, 25);
+            Rect RightRectRed = new Rect(45, 60, 25, 25);
 
 
             input.copyTo(outPut);
@@ -242,11 +242,11 @@ public class SpikeAuto2024 extends OpMode {
 
             }
             if(Rightcol > leftcol && Rightcol > midcol){
-                telemetry.addLine("Team prop is on the Right");
+                telemetry.addLine("Team prop is on the Left");
             }else if(midcol > leftcol && Rightcol < midcol){
-            telemetry.addLine("Team prop is on the Middle");
+            telemetry.addLine("Team prop is on the Right");
             }else if(midcol < leftcol && Rightcol < leftcol){
-            telemetry.addLine("Team prop is on the Left");
+            telemetry.addLine("Team prop is on the Middle");
 
         }
 

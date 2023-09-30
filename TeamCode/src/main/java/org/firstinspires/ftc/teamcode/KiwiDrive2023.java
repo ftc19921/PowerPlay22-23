@@ -18,7 +18,7 @@ public class KiwiDrive2023 extends OpMode {
     DcMotor BR;
     DcMotorEx Arm;
     CRServo Claw;
-    double ArmUp;
+
     double BRPower;
     double BLPower;
     double FPower;
@@ -26,7 +26,8 @@ public class KiwiDrive2023 extends OpMode {
     double JoyX;
     double rJoyX;
     double maxPower;
-    int armpos;
+    int armPos;
+    boolean isPressed;
 
 
     public void init() {
@@ -68,25 +69,35 @@ public class KiwiDrive2023 extends OpMode {
         telemetry.addData("BLpower", BLPower);
         telemetry.addData("Fpower", FPower);
 
-        if(gamepad2.left_trigger>gamepad2.right_trigger){
+        if(gamepad2.left_trigger>gamepad2.right_trigger&&armPos<2&&isPressed==false){
+            armPos++;
+        }else if(gamepad2.right_trigger>gamepad2.left_trigger&&armPos>0&&isPressed==false) {
+            armPos--;
+        }
+        if(gamepad2.right_trigger==gamepad2.left_trigger){
+            isPressed=false;
+        }else{
+            isPressed=true;
+        }
+        if(armPos==0){
+            Arm.setVelocity(500);
+            Arm.setTargetPosition(0);
+            Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }else if(armPos==1) {
             Arm.setVelocity(500);
             Arm.setTargetPosition(400);
             Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        }else if(gamepad2.right_trigger>gamepad2.left_trigger) {
-            Arm.setVelocity(0);
-            Arm.setTargetPosition(0);
-            Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 
-        telemetry.addData("arm position",Arm.getCurrentPosition());
-        telemetry.addData("arm target position",Arm.getTargetPosition());
-        if(gamepad2.a){
-            Claw.setPower(1);
-        } else if(gamepad2.b){
-            Claw.setPower(-1);
-        }else{
-            Claw.setPower(0);
-        }
+            telemetry.addData("arm position", Arm.getCurrentPosition());
+            telemetry.addData("arm target position", Arm.getTargetPosition());
+            if (gamepad2.a) {
+                Claw.setPower(1);
+            } else if (gamepad2.b) {
+                Claw.setPower(-1);
+            } else {
+                Claw.setPower(0);
+            }
 
 
 
