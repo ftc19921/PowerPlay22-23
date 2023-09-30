@@ -95,7 +95,7 @@ public class SpikeAuto2024 extends OpMode {
         BLPower = (SidewaysPower / 2) + ZMovement;
         BLPower += ForwardPower;
         BRPower = (SidewaysPower / 2) + ZMovement;
-        BRPower += ForwardPower;
+        BRPower += -ForwardPower;
 
         telemetry.addData("BRpower", BRPower);
         telemetry.addData("BLpower", BLPower);
