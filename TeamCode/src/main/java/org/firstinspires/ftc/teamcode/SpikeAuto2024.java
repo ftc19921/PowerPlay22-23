@@ -68,7 +68,7 @@ public class SpikeAuto2024 extends OpMode {
         BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         F.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Phase = 1;
+        Phase = 0;
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener(){
 
 
@@ -95,7 +95,7 @@ public class SpikeAuto2024 extends OpMode {
         BLPower = (SidewaysPower / 2) + ZMovement;
         BLPower += ForwardPower;
         BRPower = (SidewaysPower / 2) + ZMovement;
-        BRPower += -ForwardPower;
+        BRPower += ForwardPower;
 
         telemetry.addData("BRpower", BRPower);
         telemetry.addData("BLpower", BLPower);
@@ -115,6 +115,7 @@ public class SpikeAuto2024 extends OpMode {
                 ZMovement = 1;
             } else {
                 Phase = 3;
+
             }
         }
         if (Phase == 3) {
