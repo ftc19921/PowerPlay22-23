@@ -69,9 +69,9 @@ public class KiwiDrive2023 extends OpMode {
         telemetry.addData("BLpower", BLPower);
         telemetry.addData("Fpower", FPower);
 
-        if(gamepad2.left_trigger>gamepad2.right_trigger&&armPos<2){
+        if(gamepad2.left_trigger>gamepad2.right_trigger&&armPos<2&&isPressed==false){
             armPos++;
-        }else if(gamepad2.right_trigger>gamepad2.left_trigger&&armPos>0) {
+        }else if(gamepad2.right_trigger>gamepad2.left_trigger&&armPos>0&&isPressed==false) {
             armPos--;
         }
         if(gamepad2.right_trigger==gamepad2.left_trigger){
@@ -86,6 +86,10 @@ public class KiwiDrive2023 extends OpMode {
         }else if(armPos==1) {
             Arm.setVelocity(500);
             Arm.setTargetPosition(400);
+            Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }else if (armPos==2){
+            Arm.setVelocity(500);
+            Arm.setTargetPosition(750);
             Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 
