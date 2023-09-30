@@ -84,12 +84,12 @@ public class KiwiDrive2023 extends OpMode {
             Arm.setTargetPosition(0);
             Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }else if(armPos==1) {
-            Arm.setVelocity(500);
+            Arm.setVelocity(1000);
             Arm.setTargetPosition(400);
             Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }else if (armPos==2){
-            Arm.setVelocity(500);
-            Arm.setTargetPosition(750);
+            Arm.setVelocity(1000);
+            Arm.setTargetPosition(720);
             Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 

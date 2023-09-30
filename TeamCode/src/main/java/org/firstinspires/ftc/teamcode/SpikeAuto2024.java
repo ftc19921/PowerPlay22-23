@@ -101,6 +101,7 @@ public class SpikeAuto2024 extends OpMode {
         telemetry.addData("BLpower", BLPower);
         telemetry.addData("Fpower", FPower);
 
+
         if (Phase == 1) {
             if (BR.getCurrentPosition() < 1000) {
                 YMovement = 1;
@@ -124,11 +125,14 @@ public class SpikeAuto2024 extends OpMode {
 
         if (midlleMovement == 1){
             if (BR.getCurrentPosition() >= 12000){
-                ForwardPower = 0;
+                  XMovement = 0;
             }else{
-                ForwardPower = 1;
+                XMovement = 1;
             }
         }
+        BR.setPower(BRPower);
+        BL.setPower(BLPower);
+        F.setPower(FPower);
     }
 
 
