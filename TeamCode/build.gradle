@@ -27,3 +27,8 @@ dependencies {
     implementation project(':FtcRobotController')
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
 }
+dependencies {
+
+    implementation 'androidx.compose.ui:ui-graphics:1.0.0-rc01'
+    implementation 'org.openftc:easyopencv:1.5.2'
+}
