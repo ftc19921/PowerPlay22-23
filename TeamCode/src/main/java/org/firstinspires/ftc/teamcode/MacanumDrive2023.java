@@ -40,7 +40,7 @@ public class MacanumDrive2023 extends OpMode {
     @Override
     public void loop() {
         telemetry.addData("speed", speed);
-
+//8yg7if6fdru5tg
         forward = gamepad1.left_stick_y;
         sideways = gamepad1.right_stick_x;
         FRM.setPower((forward - sideways + rotate) * speed);
