@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.Range;
 
+@TeleOp
 public class andrewsIntakeMotor extends OpMode {
     double motorSpeed;
     boolean motorOn;

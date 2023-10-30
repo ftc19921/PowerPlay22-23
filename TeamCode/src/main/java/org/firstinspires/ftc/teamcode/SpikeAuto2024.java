@@ -125,10 +125,10 @@ public class SpikeAuto2024 extends OpMode {
         }
 
         if (midlleMovement == 1){
-            if (BR.getCurrentPosition() >= 12000){
+            if (BL.getCurrentPosition() >= 1200){
                   XMovement = 0;
             }else{
-                XMovement = 1;
+                XMovement = -1;
             }
         }
         BR.setPower(BRPower);
